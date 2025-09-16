@@ -108,6 +108,20 @@ def parse_args():
                    help="Require net PnL >= this to execute")
     p.add_argument("--max-gwei", type=float, default=0.0,
                    help="Skip execution if gas price exceeds this (0=ignore)")
+    # filtering: require at least this edge (in basis points) to even consider
+    parser.add_argument(
+        "--min-edge-bps",
+        type=int,
+        default=0,
+        help="Minimum gross edge (in bps) required to list/simulate/execute a cycle. Example: 30 = 0.30%."
+    )
+
+    # execution safety: don't broadcast anything, just build/estimate/print
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Do everything except send transactions (safe preview)."
+    )
 
     args = p.parse_args()
     return args
